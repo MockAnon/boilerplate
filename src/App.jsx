@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import Messages from './Message.jsx'; //messages
+// import Messages from './Message.jsx'; //messages
 import MessageList from './MessageList.jsx';
 
 
