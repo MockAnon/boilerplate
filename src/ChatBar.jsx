@@ -1,8 +1,5 @@
 import React, {Component} from 'react';
 
-
-
-
 class ChatBar extends Component {
   constructor(props){
     super(props);
@@ -11,37 +8,21 @@ class ChatBar extends Component {
     };
   }
 
-
   render() {
       const onSubmit = evt => {
         if (evt.key == 'Enter'){
           evt.preventDefault();
 
           const username = this.state.name;
-
           const message = evt.target.value;
-
-          // message.value = "";
-          // evt.target= "";
-
-          console.log("test", message);
-          console.log("name", username);
-
           this.props.addMessage(message, username);
-
           evt.target.value = "";
-
-
-
       }
     };
 
     const onNameChange = evt => {
       evt.preventDefault();
       this.setState({ name: evt.target.value});
-      // chatMessageInput.value = "";
-      console.log("name", evt.target.value);
-
 
     };
     return (
@@ -54,6 +35,7 @@ class ChatBar extends Component {
     );
   }
 }
+
 export default ChatBar;
 
 
