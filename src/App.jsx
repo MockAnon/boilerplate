@@ -52,10 +52,11 @@ class App extends Component {
   }
 
 
-    // onNameChange = evt => {
-    //   evt.preventDefault();
-    //   this.setState({ name: evt.target.value});
-    // };
+    onNameChange = evt => {
+      evt.preventDefault();
+      this.setState({ currentUser: {name: evt.target.value}});
+      console.log("printing out name", evt.target.value);
+    };
 
 
 //          RENDERING
@@ -69,7 +70,7 @@ class App extends Component {
       <a href="/" className="navbar-brand">Chatty</a>
     </nav>
       <MessageList messages={this.state.messages} exampleSocket={this.socket}/>
-      <ChatBar currentUser={this.state.currentUser} addMessage={this.addMessage} exampleSocket={this.socket}/>
+      <ChatBar currentUser={this.state.currentUser} addMessage={this.addMessage} exampleSocket={this.socket} onNameChange={this.onNameChange}/>
     </div>
       );
     }
