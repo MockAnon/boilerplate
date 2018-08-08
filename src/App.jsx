@@ -21,9 +21,10 @@ import MessageList from './MessageList.jsx';
 import ChatBar from './ChatBar.jsx'; //chatBar
 
 
-
-
-
+function generateRandomString() {
+  var generate = Math.random().toString(36).substr(2,6);
+  return generate;
+}
 
 class App extends Component {
 
@@ -64,10 +65,12 @@ class App extends Component {
 addMessage = (message, username) => {
 
     // console.log(oldMessages);
+
+
     const newChat = {
-      id: "A03",
       username: username,
       content: message,
+      id: generateRandomString(),
     };
 
     const messages = [...this.state.messages, newChat]
@@ -90,6 +93,8 @@ addMessage = (message, username) => {
     this.setState({ messages });
     // // console.log(this.setState);
   }
+
+
 
   render() {
     if (this.state.loading) {
