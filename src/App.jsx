@@ -1,19 +1,5 @@
 // import data from "./data.json"; //added import data
 
-// {
-//   currentUser: {name: "Bob"}, // optional. if currentUser is not defined, it means the user is Anonymous
-//   messages: [
-//     {
-//       username: "Bob",
-//       content: "Has anyone seen my marbles?",
-//     },
-//     {
-//       username: "Anonymous",
-//       content: "No, I think you lost them. You lost your marbles Bob. You lost them for good."
-//     }
-//   ]
-//
-
 import React, {Component} from 'react';
 import MessageList from './MessageList.jsx';
 
@@ -47,7 +33,6 @@ class App extends Component {
 }
 
 //mountcode part 2
-
   componentDidMount() {
     console.log("componentDidMount <App />");
     setTimeout(() => {
@@ -82,18 +67,14 @@ addMessage = (message, username) => {
       name: 'lighthouse labs',
       age
     }
-
-    // // destructuring assignment
-    // const { name } = props
-    // const name = props.name
-
-    // // end of delete later
-
-
     this.setState({ messages });
-    // // console.log(this.setState);
   }
 
+
+  // onNameChange = evt => {
+  //     evt.preventDefault();
+  //     this.setState({ name: evt.target.value});
+  //   };
 
 
   render() {
@@ -105,14 +86,9 @@ addMessage = (message, username) => {
     <nav className="navbar">
       <a href="/" className="navbar-brand">Chatty</a>
     </nav>
-
-
       <MessageList messages={this.state.messages}/>
-
       <ChatBar currentUser={this.state.currentUser} addMessage={this.addMessage}/>
-
     </div>
-
       );
     }
   }
