@@ -8,7 +8,7 @@ class App extends Component {
   constructor(props) { ///set initial state
     super(props);
     this.state = {
-  currentUser: {name: "Bob"}, // optional. if currentUser is not defined, it means the user is Anonymous
+  currentUser: {name: "Bob", nameOld: ""}, // optional. if currentUser is not defined, it means the user is Anonymous
   messages: []
   };
 }
@@ -36,15 +36,27 @@ class App extends Component {
     switch(objData.type) {
        //incoming message case
       case "incomingMessage":
-      console.log("received", objData);
-      const messages = [...this.state.messages, objData];
-      console.log("messages", messages);
-      this.setState({ messages });
+        console.log("received", objData);
+        const messages = [...this.state.messages, objData];
+        console.log("messages", messages);
+        this.setState({ messages });
+
         break;
 
          //incoming message notification
       case "incomingNotification":
+      // console.log("receivedNAme", objData);
+      // onUpdateName(objData.name);
+        // this.setState({ currentUser: {name: objData.name, nameOld: objData.nameOld});
+        this.setState({
+          messages: [
+            ...this.state.messages,
+            {username: null, content: `${objData.nameOld} has changed name to ${objData.name}`}
+          ]
+        });
+
         break;
+
       default:
         throw new Error("Unknown event type " + objData.type);
     }
@@ -65,17 +77,28 @@ class App extends Component {
   }
 
 
+  //   function onUpdateName(username) {
+  //     evt.preventDefault();
+  //   // Construct a msg object containing the data the server needs to process the message from the chat client.
+  //   console.log(JSON.stringify(username));
+  //   return JSON.stringify(username);
+  // }
+
+
     onNameChange = evt => {
       evt.preventDefault();
       const newName= evt.target.value;
-      this.setState({ currentUser: {name: evt.target.value}});
-
       console.log("printing out name", evt.target.value);
       const name = {
         name: newName,
-        type: "postNotification"
+        type: "postNotification",
+        nameOld: this.state.currentUser.name,
       }
-      console.log("name send", name);
+
+      this.setState({ currentUser: {name: newName, nameOld: this.state.currentUser.name}});
+
+
+      // this.socket.send(JSON.stringify(nameOld));
       this.socket.send(JSON.stringify(name));
 
     };
@@ -91,7 +114,7 @@ class App extends Component {
     <nav className="navbar">
       <a href="/" className="navbar-brand">Chatty</a>
     </nav>
-      <MessageList messages={this.state.messages} exampleSocket={this.socket}/>
+      <MessageList currentUser={this.state.currentUser} messages={this.state.messages} exampleSocket={this.socket}/>
       <ChatBar currentUser={this.state.currentUser} addMessage={this.addMessage} exampleSocket={this.socket} onNameChange={this.onNameChange}/>
     </div>
       );
