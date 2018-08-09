@@ -7,20 +7,18 @@ import Messages from './Message.jsx'; //messages
 //   return newName;
 // }
 
+function generateRandomString() {
+  var generate = Math.random().toString(36).substr(2,6);
+  return generate;
+}
+
 class MessageList extends Component {
-
-
-      onNameUpdate = evt => {
-      evt.preventDefault();
-      console.log("Anonymous1" +  " changed their name to " + "nomnom.");
-    }
-
 
 
 
   render() {
     const messageItems = this.props.messages.map((message) =>
-      <Messages message={message} key={message.id}/>
+      <Messages message={message} key={message.id || generateRandomString()}/>
     );
     return (
       <main className="messages">

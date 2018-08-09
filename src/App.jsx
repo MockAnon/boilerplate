@@ -9,7 +9,8 @@ class App extends Component {
     super(props);
     this.state = {
   currentUser: {name: "Bob", nameOld: ""}, // optional. if currentUser is not defined, it means the user is Anonymous
-  messages: []
+  messages: [],
+  count: 0
   };
 }
 
@@ -40,14 +41,9 @@ class App extends Component {
         const messages = [...this.state.messages, objData];
         console.log("messages", messages);
         this.setState({ messages });
-
         break;
 
-         //incoming message notification
       case "incomingNotification":
-      // console.log("receivedNAme", objData);
-      // onUpdateName(objData.name);
-        // this.setState({ currentUser: {name: objData.name, nameOld: objData.nameOld});
         this.setState({
           messages: [
             ...this.state.messages,
@@ -55,6 +51,20 @@ class App extends Component {
           ]
         });
 
+        break;
+
+      case "count":
+        // console.log("count", objData);
+        let newCount = objData.count;
+        console.log("countNew", newCount);
+
+        // ReactDOM.render(<a> `${count}` </a>, document.getElementById('react-root'));
+        this.setState({ count: newCount });
+        console.log(this.state);
+
+        // this.setState({
+
+        // });
         break;
 
       default:
@@ -86,22 +96,20 @@ class App extends Component {
 
 
     onNameChange = evt => {
-      evt.preventDefault();
-      const newName= evt.target.value;
-      console.log("printing out name", evt.target.value);
-      const name = {
-        name: newName,
-        type: "postNotification",
-        nameOld: this.state.currentUser.name,
-      }
-
-      this.setState({ currentUser: {name: newName, nameOld: this.state.currentUser.name}});
-
-
+      if (evt.key == 'Enter'){
+        evt.preventDefault();
+        const newName= evt.target.value;
+        console.log("printing out name", evt.target.value);
+        const name = {
+          name: newName,
+          type: "postNotification",
+          nameOld: this.state.currentUser.name,
+        }
+        this.setState({ currentUser: {name: newName, nameOld: this.state.currentUser.name}});
       // this.socket.send(JSON.stringify(nameOld));
       this.socket.send(JSON.stringify(name));
-
-    };
+    }
+  };
 
 
 //          RENDERING
@@ -112,7 +120,7 @@ class App extends Component {
     return (
     <div>
     <nav className="navbar">
-      <a href="/" className="navbar-brand">Chatty</a>
+      <a href="/" className="navbar-brand">Chatty</a> <a className="navbar-count"> {this.state.count} userCount</a>
     </nav>
       <MessageList currentUser={this.state.currentUser} messages={this.state.messages} exampleSocket={this.socket}/>
       <ChatBar currentUser={this.state.currentUser} addMessage={this.addMessage} exampleSocket={this.socket} onNameChange={this.onNameChange}/>

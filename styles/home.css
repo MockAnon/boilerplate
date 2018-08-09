@@ -90,3 +90,14 @@ h1 {
       padding: 0 10px;
       text-decoration: none;
     }
+
+    .navbar-count {
+      color: inherit;
+      display: block;
+      float: right;
+      font-size: 28px;
+      height: 60px;
+      line-height: 60px;
+      padding: 0 10px;
+      text-decoration: none;
+    }
