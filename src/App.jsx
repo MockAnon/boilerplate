@@ -17,10 +17,11 @@ class App extends Component {
   componentDidMount() {
     this.socket = new WebSocket("ws://localhost:3001");
     this.socket.sendJson = obj => this.socket.send(JSON.stringify(obj));
-    this.socket.onopen = () => {
+
+    this.socket.onopen = (event) => {
       console.log('Connected to socket');
     };
-    // this.socket.onmessage = this._handleSocketMessage;
+
     console.log("componentDidMount <App />");
     setTimeout(() => {
       console.log("Simulating incoming message");
@@ -29,15 +30,26 @@ class App extends Component {
 
 //          RECIEVE MESSAGE FROM SERVER
   this.socket.onmessage = (event) => {
-    let objData = (JSON.parse(event.data));
-    console.log("received", objData);
 
-    const messages = [...this.state.messages, objData];
+    const objData = (JSON.parse(event.data));
+
+    switch(objData.type) {
+       //incoming message case
+      case "incomingMessage":
+      console.log("received", objData);
+      const messages = [...this.state.messages, objData];
+      console.log("messages", messages);
+      this.setState({ messages });
+        break;
+
+         //incoming message notification
+      case "incomingNotification":
+        break;
+      default:
+        throw new Error("Unknown event type " + objData.type);
+    }
 
 
-    console.log("messages", messages);
-
-  this.setState({ messages });
   }
 }
 
@@ -46,7 +58,8 @@ class App extends Component {
     // Construct a msg object containing the data the server needs to process the message from the chat client.
     var msg = {
       username: username,
-      content: message
+      content: message,
+      type: "postMessage"
     };
     this.socket.send(JSON.stringify(msg));
   }
@@ -54,8 +67,17 @@ class App extends Component {
 
     onNameChange = evt => {
       evt.preventDefault();
+      const newName= evt.target.value;
       this.setState({ currentUser: {name: evt.target.value}});
+
       console.log("printing out name", evt.target.value);
+      const name = {
+        name: newName,
+        type: "postNotification"
+      }
+      console.log("name send", name);
+      this.socket.send(JSON.stringify(name));
+
     };
 
 
