@@ -16,10 +16,15 @@ class ChatBar extends Component {
   onSubmit = evt => {
           if (evt.key == 'Enter'){
             evt.preventDefault();
-            const username = this.props.currentUser.name;
             const message = evt.target.value;
-            this.props.addMessage(message, username);
             evt.target.value = "";
+
+            const username = this.props.currentUser.name;
+
+            this.props.addMessage(message, username);
+
+
+
         }
       };
 

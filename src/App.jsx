@@ -8,9 +8,9 @@ class App extends Component {
   constructor(props) { ///set initial state
     super(props);
     this.state = {
-  currentUser: {name: "Bob", nameOld: ""}, // optional. if currentUser is not defined, it means the user is Anonymous
+  currentUser: {name: "Bob", nameOld: "", color: "red"}, // optional. if currentUser is not defined, it means the user is Anonymous
   messages: [],
-  count: 0
+  count: 0,
   };
 }
 
@@ -54,18 +54,28 @@ class App extends Component {
         break;
 
       case "count":
-        // console.log("count", objData);
+        console.log("count", objData);
         let newCount = objData.count;
         console.log("countNew", newCount);
 
-        // ReactDOM.render(<a> `${count}` </a>, document.getElementById('react-root'));
-        this.setState({ count: newCount });
+        this.setState({ count: newCount});
         console.log(this.state);
-
-        // this.setState({
-
-        // });
         break;
+      case "color":
+        console.log("color", objData);
+        let newColor = objData.color;
+        console.log("color", newColor);
+        this.setState({ color: newColor });
+
+        this.setState({ currentUser: {name: this.state.currentUser.name, nameOld: this.state.currentUser.nameOld, color: newColor}});
+        console.log(this.state);
+        break;
+
+
+
+
+
+
 
       default:
         throw new Error("Unknown event type " + objData.type);
@@ -81,7 +91,8 @@ class App extends Component {
     var msg = {
       username: username,
       content: message,
-      type: "postMessage"
+      type: "postMessage",
+      color: this.state.currentUser.color
     };
     this.socket.send(JSON.stringify(msg));
   }
@@ -105,7 +116,7 @@ class App extends Component {
           type: "postNotification",
           nameOld: this.state.currentUser.name,
         }
-        this.setState({ currentUser: {name: newName, nameOld: this.state.currentUser.name}});
+        this.setState({ currentUser: {name: newName, nameOld: this.state.currentUser.name, color: this.state.currentUser.color}});
       // this.socket.send(JSON.stringify(nameOld));
       this.socket.send(JSON.stringify(name));
     }

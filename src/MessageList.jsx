@@ -18,8 +18,8 @@ class MessageList extends Component {
 
   render() {
     const messageItems = this.props.messages.map((message) =>
-      <Messages message={message} key={message.id || generateRandomString()}/>
-    );
+        <Messages message={message} key={message.id || generateRandomString()}/>
+        );
     return (
       <main className="messages">
           {messageItems}
