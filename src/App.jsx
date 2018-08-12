@@ -70,13 +70,6 @@ class App extends Component {
         this.setState({ currentUser: {name: this.state.currentUser.name, nameOld: this.state.currentUser.nameOld, color: newColor}});
         console.log(this.state);
         break;
-
-
-
-
-
-
-
       default:
         throw new Error("Unknown event type " + objData.type);
     }
@@ -96,15 +89,6 @@ class App extends Component {
     };
     this.socket.send(JSON.stringify(msg));
   }
-
-
-  //   function onUpdateName(username) {
-  //     evt.preventDefault();
-  //   // Construct a msg object containing the data the server needs to process the message from the chat client.
-  //   console.log(JSON.stringify(username));
-  //   return JSON.stringify(username);
-  // }
-
 
     onNameChange = evt => {
       if (evt.key == 'Enter'){
