@@ -1,4 +1,5 @@
 React Chatty App
+!["Screenshot of chatty app messages"](https://github.com/MockAnon/boilerplate/blob/master/docs/shot01.png)
 ###Note:
 please download both this app as well as the server for the app.
 Install them in seperate files.
@@ -34,7 +35,7 @@ npm start
 ```
 The server will launch at http://localhost:3001 -- let it run in the background.
 ```
-
+!["Screenshot of chatty app messages"](https://github.com/MockAnon/boilerplate/blob/master/docs/shot02.png)
 
 ###Running Chatty App
 ```
@@ -44,6 +45,8 @@ Chat until your hearts content.
 ```
 
 Note: You can also send .png image links over chatty app.
+
+!["Screenshot of chatty app png images"](https://github.com/MockAnon/boilerplate/blob/master/docs/shot03.png)
 
 ### Dependencies
 
